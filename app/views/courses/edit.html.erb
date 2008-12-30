@@ -32,7 +32,7 @@
     <td>
       <% if r = student.registration_hash[attendance.id] %>
         <% @registration = r %>
-           <%= in_place_editor_field :registration, :presence %>
+        <%= in_place_editor_select_field :registration, :presence, {},{:collection=>"[[1, 'Present'],[2, 'Absent']]"} rescue nil %>
     </td>
   <% end %>
   <% end %>
