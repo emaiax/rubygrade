@@ -13,7 +13,6 @@
   <%= link_to 'Reset Filter', edit_course_path %>
   <% end %>
  
-
 <table>
   <thead>
     <tr><td><b>Name</b></td><td><b>Surname</b></td>
@@ -22,6 +21,7 @@
        <%= link_to attendance.attendance_date, edit_attendance_path(attendance), :rel => "facebox" %></td>
      </td>
    <% end %>
+   <td><b>Average:</b></td>
   </tr>
 </thead>
 <% @students.each do |student| %>
@@ -32,10 +32,11 @@
     <td>
       <% if r = student.registration_hash[attendance.id] %>
         <% @registration = r %>
-        <%= in_place_editor_select_field :registration, :presence, {},{:collection=>"[[1, 'Authorised'],[0, 'Absent'],[1, 'Present']]"} rescue nil %>
+        <%= in_place_editor_select_field :registration, :presence, {},{:collection=>"[[nil, 'Authorised'],[0, 'Absent'],[1, 'Present']]"} rescue nil %>
     </td>
   <% end %>
   <% end %>
+   <td><%= number_to_percentage(student.attendance_percent(@course.id), :precision => 0) rescue nil %></td>
 </tr>
 <% end %>
 </table>
@@ -52,13 +53,12 @@
 <p><%= submit_tag 'Create' %></p>   
 </div>
 <% content_for :sidebar do -%>
-	<h2>Help</h2>
 	
 	<ul>
-          <p>Attendance Codes:</p>
+          <h2>Attendance Codes:</h2>
           <p>Present: "1"</p>
           <p>Absent: "0"</p>
-          <p>Authorised absence: "nil"</p>
+          <p>Authorised Absence: blank</p>
 	</ul>
 		
 <% end -%>

@@ -45,11 +45,10 @@ def show
     end
   end
   
- def attendance 
-    current_user.courses.find(params[:id]).attendances.create(params[:attendance])
-    redirect_to edit_course_path
-end
- 
+ def attendance
+    attendance = current_user.courses.find(params[:id]).attendances.create(params[:attendance])
+    redirect_to edit_attendance_path (attendance)
+ end
   
   def edit
     @course = current_user.courses.find(params[:id])

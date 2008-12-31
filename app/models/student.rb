@@ -9,6 +9,7 @@ has_many :assignments, :through => :gradations
 has_many :gradations, :dependent => :destroy
 validates_presence_of :first_name, :last_name 
 
+
 attr_accessor :course_ids
 
 
@@ -46,5 +47,11 @@ def registration_hash
   @registration_hash ||= registrations.index_by {|r| r.attendance_id}
 end
 
+def attendance_percent(cse)
+  total_registrations = self.registrations.bycourse(cse)
+  total_registrations_presence = total_registrations.count(:presence)
+  presence_total = total_registrations.sum('presence')
+  @attendance_percent = presence_total.to_f / total_registrations_presence.to_f * 100  
+end
 
 end

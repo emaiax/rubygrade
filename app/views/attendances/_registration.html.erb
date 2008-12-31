@@ -1,4 +1,5 @@
-<% @select_options = [ ["Present", 1],["Absent", 0],["Authorised", 1] ] %>
+<% @select_options = [ ["Present", 1],["Authorised", nil],["Absent", 0] ] %>
+<% @selected_option = [ ["Present", 1] ] %>
 
 <% new_or_existing = registration.new_record? ? 'new' : 'existing' %>
 <% prefix = "attendance[#{new_or_existing}_registration_attributes][]" %>
@@ -6,7 +7,7 @@
     <tr valign="top" class="<%= cycle('odd', 'even') %>">
       <td><%=h registration.student.first_name %></td>
       <td><%=h registration.student.last_name %></td>
-      <td><%= registration_form.select :presence, @select_options %>
+      <td><%= registration_form.select :presence, @select_options, {:selected=>@selected_option} %>
   </td>
     </tr>
  

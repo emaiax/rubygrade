@@ -1,4 +1,5 @@
 class Course < ActiveRecord::Base
+has_many :registrations, :dependent => :destroy
 has_many :attendances, :dependent => :destroy
 has_many :categories, :through => :assignments, :uniq => true
 has_many :enrollments, :dependent => :destroy

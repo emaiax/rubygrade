@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20081215154358) do
   create_table "registrations", :force => true do |t|
     t.integer  "student_id"
     t.integer  "attendance_id"
+    t.integer  "course_id"
     t.integer  "presence"
     t.datetime "created_at"
     t.datetime "updated_at"
