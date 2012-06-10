@@ -16,11 +16,11 @@ Rubygrade::Application.routes.draw do
   match 'login',                     :to => "sessions#new"
   match 'logout',                    :to => "sessions#destroy", :method => :delete
 
-  match 'users/troubleshooting',                     :to => "users#trobleshooting"
-  match 'users/forgot_password',                     :to => "users#forgot_password"
-  match 'users/reset_password/:password_reset_code', :to => "users#reset_password"
-  match 'users/forgot_login',                        :to => "users#forgot_login"
-  match 'users/clueless',                            :to => "users#clueless"
+  match 'user/troubleshooting',                     :to => "users#trobleshooting"
+  match 'user/forgot_password',                     :to => "users#forgot_password"
+  match 'user/reset_password/:password_reset_code', :to => "users#reset_password"
+  match 'user/forgot_login',                        :to => "users#forgot_login"
+  match 'user/clueless',                            :to => "users#clueless"
 
   resources :users do
     member do
