@@ -5,11 +5,11 @@ development: &local
     site_name: RubyGrade
     site_url: http://rubygrade.heroku.com
     
-    company_name: 
-    admin_email: aglasspool@gmail.com
+    company_name: BaseApp LTDA
+    admin_email: admin@user.com
     
     support_name: Support
-    support_email: aglasspool@gmail.com
+    support_email: contact@user.com
 
 production:
   <<: *local
