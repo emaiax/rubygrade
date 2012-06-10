@@ -1,67 +1,64 @@
 # See how all your routes lay out with "rake routes"
-ActionController::Routing::Routes.draw do |map|
-  map.resources :categories
+Rubygrade::Application.routes.draw do
 
-  map.resources :gradations
+  resources :categories
+  resources :gradations
+  resources :assignments
+  resources :attendances
+  resources :students
+  resources :courses
+  resources :registrations
 
-  map.resources :assignments
-
-  map.resources :attendances
-  
-  map.resources :students
-
-  map.resources :courses
-
-  map.resources :registrations
   # RESTful rewrites
-  
-  map.signup   '/signup',   :controller => 'users',    :action => 'new'
-  map.register '/register', :controller => 'users',    :action => 'create'
-  map.activate '/activate/:activation_code', :controller => 'users',    :action => 'activate'
-  map.login    '/login',    :controller => 'sessions', :action => 'new'
-  map.logout   '/logout',   :controller => 'sessions', :action => 'destroy', :conditions => {:method => :delete}
-  
-  map.user_troubleshooting '/users/troubleshooting', :controller => 'users', :action => 'troubleshooting'
-  map.user_forgot_password '/users/forgot_password', :controller => 'users', :action => 'forgot_password'
-  map.user_reset_password  '/users/reset_password/:password_reset_code', :controller => 'users', :action => 'reset_password'
-  map.user_forgot_login    '/users/forgot_login',    :controller => 'users', :action => 'forgot_login'
-  map.user_clueless        '/users/clueless',        :controller => 'users', :action => 'clueless'
-  
-  map.open_id_complete '/opensession', :controller => "sessions", :action => "create", :requirements => { :method => :get }
-  map.open_id_create '/opencreate', :controller => "users", :action => "create", :requirements => { :method => :get }
-    
-  map.resources :users, :member => { :edit_password => :get,
-                                     :update_password => :put,
-                                     :edit_email => :get,
-                                     :update_email => :put,
-                                     :edit_avatar => :get, 
-                                     :update_avatar => :put }
-                            
-  map.resource :session
-    
-  # Profiles
-  map.resources :profiles
-  
-  # Administration
-  map.namespace(:admin) do |admin|
-    admin.root :controller => 'dashboard', :action => 'index'
-    admin.resources :settings
-    admin.resources :users, :member => { :suspend   => :put,
-                                         :unsuspend => :put,
-                                         :activate  => :put, 
-                                         :purge     => :delete,
-                                         :reset_password => :put },
-                            :collection => { :pending   => :get,
-                                             :active    => :get, 
-                                             :suspended => :get, 
-                                             :deleted   => :get }
-  end
-  
-  # Dashboard as the default location
-  map.root :controller => 'dashboard', :action => 'index'
+  match 'signup',                    :to => "users#new"
+  match 'register',                  :to => "users#create"
+  match 'activate/:activation_code', :to => "users#activate"
+  match 'login',                     :to => "sessions#new"
+  match 'logout',                    :to => "sessions#destroy", :method => :delete
 
-  # Install the default routes as the lowest priority.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  match 'users/troubleshooting',                     :to => "users#trobleshooting"
+  match 'users/forgot_password',                     :to => "users#forgot_password"
+  match 'users/reset_password/:password_reset_code', :to => "users#reset_password"
+  match 'users/forgot_login',                        :to => "users#forgot_login"
+  match 'users/clueless',                            :to => "users#clueless"
+
+  resources :users do
+    member do
+      get :edit_password
+      put :update_password
+      get :edit_email
+      put :update_email
+      get :edit_avatar
+      put :update_avatar
+    end
+  end
+
+  resource :session
+
+  # Profiles
+  resources :profiles
+
+  # Administration
+  namespace :admin do
+    root :to => "dashboard#index"
+    resources :settings
+    resources :users do
+      member do
+        put :suspend
+        put :unsuspend
+        put :activate
+        delete :purge
+        put :reset_password
+      end
+      collection do
+        get :pending
+        get :active
+        get :suspended
+        get :deleted
+      end
+    end
+  end
+
+  # Dashboard as the default location
+  root :to => "dashboard#index"
 end
-  
