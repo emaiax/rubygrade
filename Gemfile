@@ -38,3 +38,8 @@ group :test do
   # Pretty printed test output
   gem 'turn', '~> 0.8.3', :require => false
 end
+
+gem "configatron"
+gem "fastercsv"
+gem "calendar_date_select"
+gem 'will_paginate', '~> 3.0.0'
