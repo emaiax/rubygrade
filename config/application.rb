@@ -47,6 +47,6 @@ module Rubygrade
     # Load libs
     config.autoload_paths << "#{Rails.root}/lib"
 
-    config.filter_parameter_logging << :password << :password_confirmation
+    config.filter_parameters << :password << :password_confirmation
   end
 end
