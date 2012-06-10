@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   include RoleRequirementSystem
   
   helper :all # include all helpers, all the time
-  filter_parameter_logging :password, :password_confirmation
   
   # Return the value for a given setting
   def s(identifier)
